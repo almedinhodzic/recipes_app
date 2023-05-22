@@ -5,7 +5,7 @@ class Category(models.Model):
     class Meta:
         db_table = 'Categories'
 
-    category_name = models.CharField(max_length=255)
+    category_name = models.CharField(max_length=255, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -17,7 +17,7 @@ class Recipe(models.Model):
     class Meta:
         db_table = 'Recipes'
 
-    title = models.CharField(max_length=255, unique=True)
+    title = models.CharField(max_length=255, unique=True, blank=False)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import RecipeForm, CategoryForm
 
 from .models import Category, Recipe
@@ -15,7 +15,16 @@ def get_recipes(request):
 
 
 def create_recipe(request):
-    form = RecipeForm()
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES)
+        print(form)
+        print(form.is_valid())
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect("recipes")
+    else:
+        form = RecipeForm()
+
     return render(request, 'create_recipe.html', {'form': form})
 
 

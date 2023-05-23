@@ -1,15 +1,13 @@
-from django.forms import ModelForm
+from django import forms
 
 from .models import Category, Recipe
 
 
-class CategoryForm(ModelForm):
-    class Meta:
-        model = Category
-        fields = '__all__'
+class CategoryForm(forms.ModelForm):
+    category_name = forms.CharField(label='Category', max_length=100)
 
 
-class RecipeForm(ModelForm):
+class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = '__all__'

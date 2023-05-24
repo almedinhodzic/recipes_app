@@ -6,10 +6,6 @@ from django.urls import reverse
 from .models import Category, Recipe
 
 
-def test(request):
-    return render(request, 'test.html', {'test': 'test from the view'})
-
-
 def get_recipes(request):
     recipes = Recipe.objects.all().order_by('-updated_at')
     return render(request, 'recipes.html', {'recipes': recipes})
@@ -52,4 +48,49 @@ def delete_recipe(request, id):
         recipe.delete()
         return redirect('recipes')
     
-    return render(request, 'recipes.html', {'recipe': recipe})
+    return render(request, 'recipe.html', {'recipe': recipe})
+
+
+def create_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('recipes')
+    else:
+        form = CategoryForm()
+    return render(request, 'create-category.html', {'form': form})
+
+
+def get_categories(request):
+    categories = Category.objects.all()
+    return render(request, 'categories.html', {'categories': categories})
+
+
+def get_category(request, id):
+    category = Category.objects.get(id=id)
+    return render(request, 'category.html', {'category': category})
+
+
+def delete_category(request, id):
+    category = Category.objects.get(id=id)
+
+    if request.method == 'POST':
+        category.delete()
+        return redirect('categories')
+    
+    return render(request, 'category.html', {'category': category})
+
+
+def update_category(request, id):
+    category = Category.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = CategoryForm(request.POST,instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect('categories')
+    else:
+        form = CategoryForm(instance=category)   
+
+    return render(request, 'update-category.html', {'form': form})

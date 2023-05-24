@@ -22,7 +22,7 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    recipe_image = models.ImageField(null=True, blank=True, upload_to='images/')
+    recipe_image = models.ImageField(null=True, blank=True, upload_to='images/',                            default='images/default-image-food.jpg')
 
     def __str__(self):
         return self.title

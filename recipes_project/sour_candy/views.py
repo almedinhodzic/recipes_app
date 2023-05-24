@@ -10,7 +10,7 @@ def test(request):
 
 
 def get_recipes(request):
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.all().order_by('-updated_at')
     return render(request, 'recipes.html', {'recipes': recipes})
 
 

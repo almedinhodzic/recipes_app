@@ -4,7 +4,9 @@ from .models import Category, Recipe
 
 
 class CategoryForm(forms.ModelForm):
-    category_name = forms.CharField(label='Category', max_length=100)
+    class Meta:
+        model = Category
+        fields = ['category_name']
 
 
 class RecipeForm(forms.ModelForm):

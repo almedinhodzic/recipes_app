@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
   Recipes
@@ -11,12 +12,15 @@
     <div class="card">
       <img src="{{recipe.recipe_image.url}}" class="card-img-top" alt="Food image">
       <div class="card-body">
-        <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-info">
+        <span class="position-absolute top-100 start-50 translate-middle badge rounded-pill bg-info">
           {{recipe.category}}
         </span>
-        <h5 class="card-title">{{recipe.title}}</h5>
-        <p class="card-text">{{recipe.description}}</p>
-      </div>
+        <a class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning text-dark text-decoration-none" href="{% url 'update_recipe' recipe.id %}">
+          Edit
+        </a>
+          <a class="card-title" href="{% url 'get_recipe' recipe.id %}">{{recipe.title}}</a>
+          <p class="card-text">{{recipe.description}}</p>
+        </div>
       <div class="card-footer">
         <small class="text-muted">Updated at: {{recipe.updated_at|date:'d.m.Y, H:i'}}</small>
       </div>

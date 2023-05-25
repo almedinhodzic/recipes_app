@@ -77,9 +77,9 @@ def delete_category(request, id):
 
     if request.method == 'POST':
         category.delete()
-        return redirect('categories')
+        return redirect('get_categories')
     
-    return render(request, 'category.html', {'category': category})
+    return render(request, 'categories.html', {'category': category})
 
 
 def update_category(request, id):
@@ -89,8 +89,8 @@ def update_category(request, id):
         form = CategoryForm(request.POST,instance=category)
         if form.is_valid():
             form.save()
-            return redirect('categories')
+            return redirect('get_categories')
     else:
         form = CategoryForm(instance=category)   
 
-    return render(request, 'update-category.html', {'form': form})
+    return render(request, 'update_category.html', {'form': form, 'category': category})

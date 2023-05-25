@@ -1,7 +1,7 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.contrib import messages
+
 from .forms import RecipeForm, CategoryForm
-from django.urls import reverse
 
 from .models import Category, Recipe
 
@@ -77,9 +77,10 @@ def delete_category(request, id):
 
     if request.method == 'POST':
         category.delete()
+        messages.success(request, 'Category successfully deleted.')
         return redirect('get_categories')
     
-    return render(request, 'categories.html', {'category': category})
+    return render(request, 'delete_category.html', {'category': category})
 
 
 def update_category(request, id):

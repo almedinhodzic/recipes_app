@@ -22,7 +22,7 @@
         <td>{{category.updated_at|date:'d.m.Y, H:i'}}</td>
         <td>
           <a href="{% url 'update_category' category.id %}" class="btn btn-warning">Edit</a>
-          {% include 'includes/_delete_category_modal.html' with category=category %}
+          <a href="{% url 'delete_category' category.id %}" class="btn btn-danger">Delete</a>
         </td>
       </tr>
     {% endfor %}

@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sour_candy.apps.SourCandyConfig',
-    'bootstrap5'
+    'users.apps.UsersConfig',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [

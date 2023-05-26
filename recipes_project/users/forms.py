@@ -1,14 +1,24 @@
+from typing import Any
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 
 
 class UserRegistationForm(UserCreationForm):
-    email = forms.EmailField()
-    first_name = forms.CharField(max_length=60)
-    last_name = forms.CharField(max_length=70)
+    email = forms.EmailField(widget=forms.EmailInput(
+        attrs={'class': 'form-control'}))
+    first_name = forms.CharField(
+        max_length=60, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(
+        max_length=70, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name',
                   'username', 'password1', 'password2')
+
+    def __init__(self, *args, **kwargs):
+        super(UserRegistationForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['password1'].widget.attrs['class'] = 'form-control'
+        self.fields['password2'].widget.attrs['class'] = 'form-control'

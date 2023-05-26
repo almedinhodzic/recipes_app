@@ -13,6 +13,18 @@
         <li class="nav-item">
           <a class="nav-link link-light" href="/members">CREATE CATEGORY</a>
         </li>
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link link-light" href="{% url 'logout_user' %}">LOGOUT</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link link-light" href="{% url 'login_user' %}">LOGIN</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link link-light" href="{% url 'register_user' %}">REGISTER</a>
+          </li>
+        {% endif %}
       </ul>
       {% if messages %}
       <ul class="messages">

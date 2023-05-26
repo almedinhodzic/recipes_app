@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .forms import RecipeForm, CategoryForm
 
@@ -11,11 +12,14 @@ def get_recipes(request):
     return render(request, 'recipes.html', {'recipes': recipes})
 
 
+@login_required(login_url='/users/login_user')
 def create_recipe(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save(commit=True)
+            recipe = form.save(commit=False)
+            recipe.creator = request.user
+            recipe.save()
             return redirect("recipes")
     else:
         form = RecipeForm()
@@ -38,7 +42,7 @@ def update_recipe(request, id):
             return redirect('get_recipe', id=id)
     else:
         form = RecipeForm(instance=recipe)
-    
+
     return render(request, 'update-recipe.html', {'form': form, 'id': recipe.id})
 
 
@@ -47,7 +51,7 @@ def delete_recipe(request, id):
     if request.method == 'POST':
         recipe.delete()
         return redirect('recipes')
-    
+
     return render(request, 'recipe.html', {'recipe': recipe})
 
 
@@ -79,7 +83,7 @@ def delete_category(request, id):
         category.delete()
         messages.success(request, 'Category successfully deleted.')
         return redirect('get_categories')
-    
+
     return render(request, 'delete_category.html', {'category': category})
 
 
@@ -87,11 +91,11 @@ def update_category(request, id):
     category = Category.objects.get(id=id)
 
     if request.method == 'POST':
-        form = CategoryForm(request.POST,instance=category)
+        form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
             form.save()
             return redirect('get_categories')
     else:
-        form = CategoryForm(instance=category)   
+        form = CategoryForm(instance=category)
 
     return render(request, 'update_category.html', {'form': form, 'category': category})

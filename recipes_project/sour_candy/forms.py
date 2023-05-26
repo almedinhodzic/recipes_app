@@ -13,6 +13,7 @@ class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = '__all__'
+        exclude = ('creator',)
 
 
     def __init__(self, *args, **kwargs):

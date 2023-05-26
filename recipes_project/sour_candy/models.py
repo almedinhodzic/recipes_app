@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -23,6 +24,7 @@ class Recipe(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     recipe_image = models.ImageField(null=True, blank=True, upload_to='images/',                            default='images/default-image-food.jpg')
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

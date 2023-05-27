@@ -12,7 +12,7 @@ def get_recipes(request):
     return render(request, 'recipes.html', {'recipes': recipes})
 
 
-@login_required(login_url='/users/login_user')
+@login_required()
 def create_recipe(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST, request.FILES)
@@ -32,6 +32,7 @@ def get_recipe(request, id):
     return render(request, 'recipe.html', {"recipe": recipe})
 
 
+@login_required()
 def update_recipe(request, id):
     recipe = Recipe.objects.get(id=id)
 
@@ -46,6 +47,7 @@ def update_recipe(request, id):
     return render(request, 'update-recipe.html', {'form': form, 'id': recipe.id})
 
 
+@login_required
 def delete_recipe(request, id):
     recipe = Recipe.objects.get(id=id)
     if request.method == 'POST':
@@ -99,3 +101,9 @@ def update_category(request, id):
         form = CategoryForm(instance=category)
 
     return render(request, 'update_category.html', {'form': form, 'category': category})
+
+
+@login_required
+def get_my_recipes(request):
+    recipes = Recipe.objects.filter(creator=request.user)
+    return render(request, 'my_recipes.html', {'recipes': recipes})

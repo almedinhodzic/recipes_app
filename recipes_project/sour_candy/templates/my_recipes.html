@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  My recipes
+{% endblock title %}
+
+{% block content %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Updated at</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for recipe in recipes %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{recipe.title}}</td>
+        <td>{{recipe.updated_at|date:'d.m.Y, H:i'}}</td>
+        <td>
+          <a href="{% url 'update_recipe' recipe.id %}" class="btn btn-warning">Edit</a>
+          <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-danger">Delete</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}
+

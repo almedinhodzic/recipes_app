@@ -107,3 +107,7 @@ def update_category(request, id):
 def get_my_recipes(request):
     recipes = Recipe.objects.filter(creator=request.user)
     return render(request, 'my_recipes.html', {'recipes': recipes})
+
+
+def handling_404(request, exception):
+    return render(request, '404.html', {})

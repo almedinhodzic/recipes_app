@@ -19,6 +19,7 @@
           Edit
         </a>
           <a class="card-title" href="{% url 'get_recipe' recipe.id %}">{{recipe.title}}</a>
+          <p>Creator: {{recipe.creator.first_name}}</p>
           <p class="card-text">{{recipe.description}}</p>
         </div>
       <div class="card-footer">

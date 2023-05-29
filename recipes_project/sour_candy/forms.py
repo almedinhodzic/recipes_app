@@ -1,12 +1,6 @@
 from django import forms
 
-from .models import Category, Recipe
-
-
-class CategoryForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = ['category_name']
+from .models import Recipe, Profile
 
 
 class RecipeForm(forms.ModelForm):
@@ -15,7 +9,12 @@ class RecipeForm(forms.ModelForm):
         fields = '__all__'
         exclude = ('creator',)
 
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['category'].widget.attrs.update({"class": "form-select"})
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('user.first_name',)

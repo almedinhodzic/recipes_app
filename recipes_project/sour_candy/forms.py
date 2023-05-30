@@ -17,4 +17,4 @@ class RecipeForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('user.first_name',)
+        fields = '__all__'

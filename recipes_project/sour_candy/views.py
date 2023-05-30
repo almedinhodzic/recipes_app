@@ -5,6 +5,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import RecipeForm, ProfileForm
 from .models import Recipe, Profile
 
+from django.http import FileResponse
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
+
 
 def get_recipes(request):
     recipes = Recipe.objects.all().order_by('-updated_at')
@@ -69,3 +75,30 @@ def handling_404(request, exception):
 def update_profile(request):
     form = ProfileForm()
     return render(request, 'my_profile.html', {'form': form})
+
+
+def recipes_pdf(request):
+    buf = io.BytesIO()
+    canv = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+    textob = canv.beginText()
+    textob.setTextOrigin(inch, inch)
+    textob.setFont("Helvetica", 14)
+
+    recipes = Recipe.objects.all()
+
+    lines = []
+
+    for recipe in recipes:
+        lines.append(recipe.title)
+        lines.append(recipe.description)
+        lines.append("  ")
+
+    for line in lines:
+        textob.textLine(line)
+
+    canv.drawText(textob)
+    canv.showPage()
+    canv.save()
+    buf.seek(0)
+
+    return FileResponse(buf, as_attachment=True, filename="Recipes.pdf")

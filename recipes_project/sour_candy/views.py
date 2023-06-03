@@ -13,6 +13,12 @@ from reportlab.lib.pagesizes import letter
 
 
 def get_recipes(request):
+    if request.method == 'POST':
+        if request.POST['search']:
+            search = request.POST['search']
+            recipes = Recipe.objects.filter(title__icontains=search)
+            return render(request, 'recipes.html', {'recipes': recipes})
+    
     recipes = Recipe.objects.all().order_by('-updated_at')
     return render(request, 'recipes.html', {'recipes': recipes})
 

@@ -9,7 +9,24 @@
   <h2>Recipes</h2>
   <div class="card-group">
     {% for recipe in recipes %}
-    <div class="card">
+    <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+      <!-- Card-->
+      <div class="card rounded shadow-sm border-0">
+        <div class="card-body p-4">
+          <img src="{{recipe.recipe_image.url}}" alt="Food image" class="img-fluid d-block mx-auto mb-3">
+          <h5> <a href="{% url 'get_recipe' recipe.id %}" class="text-dark">{{recipe.title}}</a></h5>
+          <p class="small text-muted font-italic">{{recipe.description}}</p>
+          <ul class="list-inline small">
+            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% comment %} <div class="card">
       <img src="{{recipe.recipe_image.url}}" class="card-img-top" alt="Food image">
       <div class="card-body">
         <span class="position-absolute top-100 start-50 translate-middle badge rounded-pill bg-info">
@@ -25,7 +42,7 @@
       <div class="card-footer">
         <small class="text-muted">Updated at: {{recipe.updated_at|date:'d.m.Y, H:i'}}</small>
       </div>
-    </div>
+    </div> {% endcomment %}
     {% endfor %}
   </div>
 {% endblock content %}
